@@ -24,7 +24,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="a5109d72-9212-4096-b8c8-86592d345025">
+        <schema name="main" object-types="table, column" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="fa14a949-8963-43a8-8640-263794c2f55b">
@@ -65,7 +69,10 @@ select * from  faculties f left join students s on s.faculty_id = f.id;
 
 select s.name, f.name
 from faculties f
-inner join students s on s.faculty_id = f.id;]]></console>
+inner join students s on s.faculty_id = f.id;
+
+
+create table weather (id integer primary key autoincrement, city text, localdate text, temperature real);]]></console>
     </connection>
     <connection id="818c5967-b55f-4faf-95e6-7d777b9ad80f">
       <console name="Connection 2" type="STANDARD" schema="" session="Main" />
@@ -75,7 +82,9 @@ inner join students s on s.faculty_id = f.id;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="a5109d72-9212-4096-b8c8-86592d345025" object-ref="consoles/Connection 1" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="fa14a949-8963-43a8-8640-263794c2f55b" />
