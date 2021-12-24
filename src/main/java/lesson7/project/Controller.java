@@ -11,6 +11,7 @@ public class Controller {
     public Controller() {
         this.variants.put(1, Period.NOW);
         this.variants.put(5, Period.FIVE_DAYS);
+        this.variants.put(2, Period.DB);
     }
 
     public void getWeather(String userInput, String selectedCity) throws IOException {
@@ -23,6 +24,9 @@ public class Controller {
             case FIVE_DAYS:
                 //throw new IOException("Метод ещё не реализован!");
                 weatherModel.getWeather(selectedCity, Period.FIVE_DAYS);
+                break;
+            case DB:
+                weatherModel.getSavedToDBWeather();
                 break;
         }
     }

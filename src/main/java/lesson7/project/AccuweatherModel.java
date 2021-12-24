@@ -27,6 +27,7 @@ public class AccuweatherModel implements WeatherModel{
 
     private  static final OkHttpClient okHttpClient = new OkHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final DataBaseRepository dataBaseRepository = new DataBaseRepository();
 
 
     @Override
@@ -54,12 +55,14 @@ public class AccuweatherModel implements WeatherModel{
                 //TODO: сделать человекочитаемый вывод погоды. Выбрать параметры для вывода на своё усмотрение
                 //Например: Погода в городе Москва - 5 градусов по Цельсию Expect showers late Monday night
 
+                // TODO dataBaseRepository.saveWeatherToDatabase(new Weather(...))
+
                 break;
                 
             case FIVE_DAYS:
                 //TODO*: реализовать вывод погоды на 5 дней
 
-                /* HttpUrl httpUrl5 = new HttpUrl.Builder()
+                HttpUrl httpUrl5 = new HttpUrl.Builder()
                         .scheme(PROTOCOL)
                         .host(BASE_HOST)
                         .addPathSegment(FORECASTS)
@@ -74,7 +77,7 @@ public class AccuweatherModel implements WeatherModel{
                         .url(httpUrl5)
                         .build();
 
-                Response fiveDaysForecastResponse = okHttpClient.newCall(request5).execute();*/
+                Response fiveDaysForecastResponse = okHttpClient.newCall(request5).execute();
 
                 break;
         }
@@ -105,6 +108,11 @@ public class AccuweatherModel implements WeatherModel{
         String cityKey = objectMapper.readTree(responseString).get(0).at("/Key").asText();
 
         return cityKey;
+    }
+
+    @Override
+    public void getSavedToDBWeather() {
+        dataBaseRepository.getSavedToDBWeather();
     }
 }
 
