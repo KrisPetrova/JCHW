@@ -28,7 +28,6 @@ public class UserInterfaceView {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }
