@@ -15,20 +15,20 @@ public class Weather {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getTemperature() {
+        return String.valueOf(temperature);
     }
 
-    public String getTemperature() {
-        return temperature;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setTemperature(double temperature) {
@@ -40,7 +40,7 @@ public class Weather {
         return "Weather{" +
                 "city='" + city + '\'' +
                 ", date='" + date + '\'' +
-                ", temperature=" + temperature +
+                ", temperature=" + String.format("%.2f", temperature) +
                 '}';
     }
 }

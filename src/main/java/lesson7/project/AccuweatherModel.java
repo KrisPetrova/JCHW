@@ -1,12 +1,14 @@
 package lesson7.project;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lesson7.project.entity.Weather;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AccuweatherModel implements WeatherModel{
 
@@ -28,9 +30,12 @@ public class AccuweatherModel implements WeatherModel{
 
     private  static final OkHttpClient okHttpClient = new OkHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final DataBaseRepository dataBaseRepository = new DataBaseRepository();
+
+    //ArrayList<String[]> dateList = new ArrayList<>();
 
     @Override
-    public void getWeather(String selectedCity, Period period) throws IOException {
+    public void getWeather(String selectedCity, Period period) throws IOException, SQLException {
         switch(period) {
             case NOW:
                 HttpUrl httpUrl = new HttpUrl.Builder()
@@ -52,9 +57,6 @@ public class AccuweatherModel implements WeatherModel{
                 String weatherResponse = oneDayForecastResponse.body().string();
                 System.out.println(weatherResponse);
 
-                //TODO: сделать человекочитаемый вывод погоды. Выбрать параметры для вывода на своё усмотрение
-                //Например: Погода в городе Москва - 5 градусов по Цельсию Expect showers late Monday night
-
                 String weatherDate = objectMapper.readTree(weatherResponse).at("/DailyForecasts").
                         get(0).at("/Date").asText();
 
@@ -74,11 +76,13 @@ public class AccuweatherModel implements WeatherModel{
 
                 // System.out.println( Double.parseDouble(tempAbbr));
 
+                String[] dateList = weatherDate.split("T");
+                System.out.println("Weather at " + selectedCity + " for " + dateList[0] + ": Average temperature is " + tempAbbr + "C " + precipitation);
+
+                dataBaseRepository.saveWeatherToDataBase(new Weather(selectedCity, dateList[0], temperature));
+
                 break;
             case FIVE_DAYS:
-                //TODO*: реализовать вывод погоды на 5 дней
-                //   http://dataservice.accuweather.com/forecasts/v1/daily/5day/
-
                 HttpUrl httpUrl5 = new HttpUrl.Builder()
                         .scheme(PROTOCOL)
                         .host(BASE_HOST)
@@ -115,9 +119,16 @@ public class AccuweatherModel implements WeatherModel{
                     // double tempDouble_5 =Double.parseDouble(tempAbbr_5);
                     String[] dateList_5 = weatherDate_5.split("T");
                     System.out.println("Weather at " + selectedCity + " for " + dateList_5[0] + ": Average temperature is " + tempAbbr_5 + "C " + precipitation_5);
+
+                    dataBaseRepository.saveWeatherToDataBase(new Weather(selectedCity, dateList_5[0], temperature_5));
                 }
                 break;
         }
+    }
+
+    @Override
+    public void getSavedToDBWeather(String city) {
+        dataBaseRepository.getSavedToDBWeather(city);
     }
 
     private static String detectedCityKey(String selectedCity) throws IOException {

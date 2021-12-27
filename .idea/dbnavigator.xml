@@ -82,9 +82,7 @@ create table weather (id integer primary key autoincrement, city text, localdate
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="a5109d72-9212-4096-b8c8-86592d345025" object-ref="consoles/Connection 1" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="fa14a949-8963-43a8-8640-263794c2f55b" />

@@ -1,6 +1,7 @@
 package lesson7.project;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,14 +20,21 @@ public class Controller {
 
         switch (variants.get(userIntInput)) {
             case NOW:
+                try {
                 weatherModel.getWeather(selectedCity, Period.NOW);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case FIVE_DAYS:
-                //throw new IOException("Метод ещё не реализован!");
+                try {
                 weatherModel.getWeather(selectedCity, Period.FIVE_DAYS);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case DB:
-                weatherModel.getSavedToDBWeather();
+                weatherModel.getSavedToDBWeather(selectedCity);
                 break;
         }
     }
